@@ -7,9 +7,16 @@ def get_currency_rate():
     soup = BeautifulSoup(response.text, 'html.parser')
     
     # Ищем строку с USD (примерно так, может потребоваться доработка)
-    usd_rate = soup.find('td', text='Доллар США').find_next('td').text
-    print(f"Курс USD: {usd_rate} руб.")
+    usd_rate = soup.find('td', string='Доллар США').find_next('td').text
+    eur_rate = soup.find('td', string='Евро').find_next('td').text
+
+    return {
+        'USD': usd_rate,
+        'EUR': eur_rate  # Добавляем евро в вывод
+    }
 
 if __name__ == "__main__":
-    
-    get_currency_rate()
+
+    rates = get_currency_rate()
+    print(f"Курс USD: {rates['USD']} руб.")
+    print(f"Курс EUR: {rates['EUR']} руб.")  
